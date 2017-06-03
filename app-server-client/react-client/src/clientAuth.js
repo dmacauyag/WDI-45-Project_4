@@ -10,6 +10,15 @@ const clientAuth = {
       method: 'post',
       data: userInfo
     })
+    .then(res => {
+      if(res.data.token) {
+        localStorage.setItem('token', res.data.token)
+        axios.defaults.headers.common['x-access-token'] = localStorage.getItem('token')
+        return jwt_decode(res.data.token)
+      } else {
+        return false
+      }
+    })
   },
 
   logIn: (credentials) => {
@@ -22,7 +31,6 @@ const clientAuth = {
       if(res.data.token) {
         localStorage.setItem('token', res.data.token)
         axios.defaults.headers.common['x-access-token'] = localStorage.getItem('token')
-        console.log("Decoded token:", jwt_decode(res.data.token))
         return jwt_decode(res.data.token)
       } else {
         return false
