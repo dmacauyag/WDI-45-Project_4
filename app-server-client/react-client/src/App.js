@@ -25,7 +25,6 @@ class App extends Component {
 
   _signUp(newUser) {
     clientAuth.signUp(newUser).then((data) => {
-      console.log(data)
       const currentUser = clientAuth.getCurrentUser()
       this.setState({
         currentUser: currentUser,
