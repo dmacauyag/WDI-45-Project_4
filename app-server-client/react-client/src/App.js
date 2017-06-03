@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import './App.css'
 import clientAuth from './clientAuth'
+import SignUp from './SignUp'
+import LogIn from './LogIn'
 
 class App extends Component {
 
@@ -25,8 +26,11 @@ class App extends Component {
   _signUp(newUser) {
     clientAuth.signUp(newUser).then((data) => {
       console.log(data)
+      const currentUser = clientAuth.getCurrentUser()
       this.setState({
-        view: 'login'
+        currentUser: currentUser,
+        loggedIn: !!currentUser,
+        view: 'home'
       })
     })
   }
@@ -36,7 +40,8 @@ class App extends Component {
     clientAuth.logIn(credentials).then(user => {
       this.setState({
         currentUser: user,
-        loggedIn: true
+        loggedIn: true,
+        view: 'home'
       })
     })
   }
@@ -71,9 +76,6 @@ class App extends Component {
           <li><button name='login' onClick={this._setView.bind(this)}>Log In</button></li>
           <li><button onClick={this._logOut.bind(this)}>Log Out</button></li>
         </ul>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         {{
           home: <h1>The Home View</h1>,
           login: <LogIn onLogin={this._logIn.bind(this)} />,
@@ -84,54 +86,4 @@ class App extends Component {
   }
 }
 
-class SignUp extends Component {
-  _handleSignup(evt) {
-    evt.preventDefault()
-    const newUser = {
-      name: this.refs.name.value,
-      email: this.refs.email.value,
-      password: this.refs.password.value
-    }
-    this.props.onSignup(newUser)
-  }
-
-  render() {
-    return (
-      <div className='container'>
-        <h2>Sign Up</h2>
-        <form onSubmit={this._handleSignup.bind(this)}>
-          <input type='text' placeholder='Name' ref='name' />
-          <input type='text' placeholder='Email' ref='email' />
-          <input type='password' placeholder='Password' ref='password' />
-          <button type='submit'>Create Account</button>
-        </form>
-      </div>
-    )
-  }
-}
-
-class LogIn extends Component {
-  _handleLogin(evt) {
-    evt.preventDefault()
-    const credentials = {
-      email: this.refs.email.value,
-      password: this.refs.password.value
-    }
-    this.props.onLogin(credentials)
-  }
-
-  render() {
-    return (
-      <div className='container'>
-        <h2>Log In</h2>
-        <form onSubmit={this._handleLogin.bind(this)}>
-          <input type='text' placeholder='Email' ref='email' />
-          <input type='password' placeholder='Password' ref='password' />
-          <button type='submit'>Log In</button>
-        </form>
-      </div>
-    )
-  }
-}
-
-export default App;
+export default App
