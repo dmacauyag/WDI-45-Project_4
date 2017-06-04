@@ -7,8 +7,8 @@ class Map extends Component {
 
     return (
       <GoogleMap
-        defaultZoom={10}
-        defaultCenter={{ lat: -25.363882, lng: 131.044922 }} >
+        defaultZoom={12}
+        defaultCenter={{ lat: 34.0162932, lng: -118.3908012 }} >
         {markers.map((marker, index) => (
             <Marker {...marker} />
           )
