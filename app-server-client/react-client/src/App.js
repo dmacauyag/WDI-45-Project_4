@@ -82,6 +82,8 @@ class App extends Component {
           signup: <SignUp onSignup={this._signUp.bind(this)} />
         }[this.state.view]}
         <Map
+          zoom={12}
+          center={{ lat: 34.0162932, lng: -118.3908012 }}
           containerElement={<div style={{ height: `500px` }} />}
           mapElement={<div style={{ height: `500px` }} />} />
       </div>
