@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import './App.css'
 import clientAuth from './clientAuth'
-import SignUp from './SignUp'
-import LogIn from './LogIn'
+import SignUp from './components/SignUp'
+import LogIn from './components/LogIn'
+import Map from './Map.js'
 
 class App extends Component {
 
@@ -80,6 +81,9 @@ class App extends Component {
           login: <LogIn onLogin={this._logIn.bind(this)} />,
           signup: <SignUp onSignup={this._signUp.bind(this)} />
         }[this.state.view]}
+        <Map
+          containerElement={<div style={{ height: `500px` }} />}
+          mapElement={<div style={{ height: `500px` }} />} />
       </div>
     );
   }
