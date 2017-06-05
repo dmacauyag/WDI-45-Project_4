@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import axios from 'axios'
+
+axios.defaults.baseURL = 'http://localhost:3001'
 
 class Map extends Component {
   constructor() {
@@ -19,6 +22,14 @@ class Map extends Component {
 
   _mapMoved() {
     console.log('_mapMoved:', JSON.stringify(this.state.map.getCenter()))
+
+    return axios({
+      url: '/api/strava/segments',
+      method: 'get'
+    })
+    .then(res => {
+      console.log(res.data.data.segments)
+    })
   }
 
   _zoomChanged() {
