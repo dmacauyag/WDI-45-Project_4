@@ -17,7 +17,8 @@ class App extends Component {
       mql: mql,
       currentUser: null,
       loggedIn: false,
-      view: 'home'
+      view: 'home',
+      segments: []
     }
   }
 
@@ -71,12 +72,19 @@ class App extends Component {
   }
 
   render() {
-    var sidebarContent = <b>Sidebar content</b>
-    var sidebarProps = {
-      sidebar: this.state.sidebarOpen,
-      docked: this.state.sidebarDocked,
-      onSetOpen: this.onSetSidebarOpen
+    const location = {
+      lat: 34.0162932,
+      lng: -118.3908012
     }
+
+    const markers = [
+      {
+        location: {
+          lat: 34.0162932,
+          lng: -118.3908012
+        }
+      }
+    ]
 
     return (
         <div className="App">
@@ -92,11 +100,14 @@ class App extends Component {
             login: <LogIn onLogin={this._logIn.bind(this)} />,
             signup: <SignUp onSignup={this._signUp.bind(this)} />
           }[this.state.view]}
-          <Map
-            zoom={12}
-            center={{ lat: 34.0162932, lng: -118.3908012 }}
-            containerElement={<div style={{ height: `500px` }} />}
-            mapElement={<div style={{ height: `500px` }} />} />
+          <div className="map-container" style={{height:'400px'}}>
+            <Map
+              zoom={12}
+              markers={markers}
+              center={location}
+              containerElement={<div style={{ height: `100%` }} />}
+              mapElement={<div style={{ height: `100%` }} />} />
+          </div>
         </div>
     )
   }

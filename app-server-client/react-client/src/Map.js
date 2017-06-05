@@ -37,7 +37,15 @@ class Map extends Component {
   }
 
   render() {
-    const markers = this.props.markers || []
+    const markers = this.props.markers.map((segment, i) => {
+      const marker = {
+        position: {
+          lat: segment.location.lat,
+          lng: segment.location.lng
+        }
+      }
+      return <Marker key={i} {...marker} />
+    })
 
     return (
       <GoogleMap
@@ -46,10 +54,7 @@ class Map extends Component {
         onZoomChanged={this._zoomChanged.bind(this)}
         defaultZoom={this.props.zoom}
         defaultCenter={this.props.center} >
-        {markers.map((marker, index) => (
-            <Marker {...marker} />
-          )
-        )}
+        {markers}
       </GoogleMap>
     )
   }
