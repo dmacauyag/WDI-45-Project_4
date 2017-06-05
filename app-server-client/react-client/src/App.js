@@ -3,45 +3,24 @@ import './App.css'
 import clientAuth from './clientAuth'
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
+import Navbar from './components/Navbar'
+import Sidebar from './components/Sidebar'
 import Map from './Map.js'
-import Sidebar from 'react-sidebar'
 
 const mql = window.matchMedia(`(min-width: 800px)`)
 
 class App extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       mql: mql,
-      docked: props.docked,
-      open: props.open,
       currentUser: null,
       loggedIn: false,
       view: 'home'
     }
-
-    this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
-    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this)
-  }
-//////////////////////////////////////////////////
-  onSetSidebarOpen(open) {
-    this.setState({sidebarOpen: open});
   }
 
-  componentWillMount() {
-    mql.addListener(this.mediaQueryChanged);
-    this.setState({mql: mql, sidebarDocked: mql.matches});
-  }
-
-  componentWillUnmount() {
-    this.state.mql.removeListener(this.mediaQueryChanged);
-  }
-
-  mediaQueryChanged() {
-    this.setState({sidebarDocked: this.state.mql.matches});
-  }
-//////////////////////////////////////////////////
   componentDidMount() {
     const currentUser = clientAuth.getCurrentUser()
     this.setState({
@@ -100,14 +79,9 @@ class App extends Component {
     }
 
     return (
-      <Sidebar sidebar={sidebarContent}
-               open={this.state.sidebarOpen}
-               docked={this.state.sidebarDocked}
-               onSetOpen={this.onSetSidebarOpen}>
         <div className="App">
-          <div className="App-header">
-            <h2>{this.state.loggedIn ? this.state.currentUser.name : 'Not Logged In'}</h2>
-          </div>
+          <Navbar />
+          {/* <Sidebar /> */}
           <ul>
             <li><button name='signup' onClick={this._setView.bind(this)}>Sign Up</button></li>
             <li><button name='login' onClick={this._setView.bind(this)}>Log In</button></li>
@@ -124,8 +98,7 @@ class App extends Component {
             containerElement={<div style={{ height: `500px` }} />}
             mapElement={<div style={{ height: `500px` }} />} />
         </div>
-      </Sidebar>
-    );
+    )
   }
 }
 
