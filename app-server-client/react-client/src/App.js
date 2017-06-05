@@ -17,8 +17,7 @@ class App extends Component {
       mql: mql,
       currentUser: null,
       loggedIn: false,
-      view: 'home',
-      segments: []
+      view: 'home'
     }
   }
 
@@ -73,18 +72,9 @@ class App extends Component {
 
   render() {
     const location = {
-      lat: 34.0162932,
-      lng: -118.3908012
+      lat: 37.832429,
+      lng: -122.479534
     }
-
-    const markers = [
-      {
-        location: {
-          lat: 34.0162932,
-          lng: -118.3908012
-        }
-      }
-    ]
 
     return (
         <div className="App">
@@ -102,8 +92,7 @@ class App extends Component {
           }[this.state.view]}
           <div className="map-container" style={{height:'400px'}}>
             <Map
-              zoom={12}
-              markers={markers}
+              zoom={14}
               center={location}
               containerElement={<div style={{ height: `100%` }} />}
               mapElement={<div style={{ height: `100%` }} />} />

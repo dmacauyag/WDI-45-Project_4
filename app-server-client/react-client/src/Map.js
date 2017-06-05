@@ -8,11 +8,13 @@ class Map extends Component {
   constructor() {
     super()
     this.state = {
-      map: null
+      map: null,
+      segments: []
     }
   }
 
   _mapLoaded(map) {
+    console.log('_mapLoaded')
     if (this.state.map != null)
       return
     this.setState({
@@ -29,6 +31,11 @@ class Map extends Component {
     })
     .then(res => {
       console.log(res.data.data.segments)
+      this.setState({
+        segments: [
+          ...res.data.data.segments
+        ]
+      })
     })
   }
 
@@ -37,11 +44,11 @@ class Map extends Component {
   }
 
   render() {
-    const markers = this.props.markers.map((segment, i) => {
+    const markers = this.state.segments.map((segment, i) => {
       const marker = {
         position: {
-          lat: segment.location.lat,
-          lng: segment.location.lng
+          lat: segment.start_latlng[0],
+          lng: segment.start_latlng[1]
         }
       }
       return <Marker key={i} {...marker} />
