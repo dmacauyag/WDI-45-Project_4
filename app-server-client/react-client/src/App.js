@@ -109,8 +109,9 @@ class App extends Component {
     console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
-  _handleFavorite() {
-    console.log("Favorited item")
+  _handleFavorite(evt) {
+    evt.preventDefault()
+    console.log("Favorited item", evt.target.id)
   }
 //////////////////////////////////////////////////////////////
   render() {
@@ -122,7 +123,7 @@ class App extends Component {
     const segmentElements = this.state.segments.map((segment, i) => {
       return (
         <li key={i} id={segment.id}>
-          <span onClick={this._handleFavorite.bind(this)} className="glyphicon glyphicon-heart-empty" aria-hidden="false"></span>
+          <span id={segment.id} onClick={this._handleFavorite.bind(this)} className="glyphicon glyphicon-heart-empty" aria-hidden="false"></span>
           <span>{segment.name}</span>
         </li>
       )
