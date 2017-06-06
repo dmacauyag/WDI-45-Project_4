@@ -9,7 +9,8 @@ class Map extends Component {
     super()
     this.state = {
       map: null,
-      segments: []
+      segments: [],
+      bounds: null
     }
   }
 
@@ -23,18 +24,23 @@ class Map extends Component {
   }
 
   _mapMoved() {
-    console.log('_mapMoved:', JSON.stringify(this.state.map.getCenter()))
+    console.log('_mapMoved center:', JSON.stringify(this.state.map.getCenter()))
+
+    const bounds = this.state.map.getBounds()
+    const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
 
     return axios({
       url: '/api/strava/segments',
-      method: 'get'
+      method: 'post',
+      data: {boundary: boundaryStr}
     })
     .then(res => {
       console.log(res.data.data.segments)
       this.setState({
         segments: [
           ...res.data.data.segments
-        ]
+        ],
+        bounds: boundaryStr
       })
     })
   }
