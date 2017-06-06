@@ -119,7 +119,9 @@ class App extends Component {
     return (
       <div>
         <div>
-          <Sidebar />
+          <Sidebar
+            segments={this.state.segments}
+          />
               <div className="main-container">
 
                 <div>
