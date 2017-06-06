@@ -5,6 +5,7 @@ const
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   usersRoutes = require('./routes/users.js'),
+  segmentsRoutes = require('./routes/segment.js'),
   stravaRoutes = require('./routes/strava.js'),
   cors = require('cors'),
   mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/letsmove',
@@ -35,6 +36,10 @@ app.use('/api/strava', stravaRoutes)
 
 // apply all user routes here:
 app.use('/api/users', usersRoutes)
+
+// apply all segments routes here:
+app.use('/api/segments', segmentsRoutes)
+
 
 // listen for incoming http requests:
 app.listen(port, (err) => {
