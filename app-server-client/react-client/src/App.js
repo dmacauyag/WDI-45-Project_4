@@ -117,30 +117,55 @@ class App extends Component {
     }
 
     return (
-        <div className="App">
-          <Navbar />
-          {/* <Sidebar /> */}
-          <ul>
-            <li><button name='signup' onClick={this._setView.bind(this)}>Sign Up</button></li>
-            <li><button name='login' onClick={this._setView.bind(this)}>Log In</button></li>
-            <li><button onClick={this._logOut.bind(this)}>Log Out</button></li>
-          </ul>
-          {{
-            home: <h1>The Home View</h1>,
-            login: <LogIn onLogin={this._logIn.bind(this)} />,
-            signup: <SignUp onSignup={this._signUp.bind(this)} />
-          }[this.state.view]}
-          <div className="map-container" style={{height:'400px'}}>
-            <Map
-              zoom={14}
-              center={location}
-              segments={this.state.segments}
-              ref={this._mapLoaded.bind(this)}
-              onDragEnd={this._mapMoved.bind(this)}
-              onZoomChanged={this._zoomChanged.bind(this)}
-              containerElement={<div style={{ height: `100%` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
+      <div>
+        <div>
+          <Sidebar />
+              <div className="main-container">
+
+                <div>
+                  <button name='signup' onClick={this._setView.bind(this)}>Sign Up</button>
+                  <button name='login' onClick={this._setView.bind(this)}>Log In</button>
+                  <button onClick={this._logOut.bind(this)}>Log Out</button>
+                </div>
+
+                  {{
+                    home:
+                      <section className="imagebg image--light cover cover-blocks bg--secondary" style={{padding: 0}}>
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-sm-6 col-md-5 col-md-offset-1">
+                              <div>
+                                <h1>Welcome to the Home Page!</h1>
+                                <p className="lead">
+                                  Navigate the map below to find running and/or cycling segments.
+                                </p>
+                                <hr className="short" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </section>,
+                    login: <LogIn onLogin={this._logIn.bind(this)} />,
+                    signup: <SignUp onSignup={this._signUp.bind(this)} />
+                  }[this.state.view]}
+
+                  <section id="elements" style={{padding: 0}}>
+                    <div className="container" style={{padding: 0, height: `500px`}}>
+                      <Map
+                        zoom={14}
+                        center={location}
+                        segments={this.state.segments}
+                        ref={this._mapLoaded.bind(this)}
+                        onDragEnd={this._mapMoved.bind(this)}
+                        onZoomChanged={this._zoomChanged.bind(this)}
+                        containerElement={<div style={{ height: `100%` }} />}
+                        mapElement={<div style={{ height: `100%` }} />}
+                        />
+                        </div>
+                  </section>
+
+                    {/* <Footer /> */}
+                </div>
           </div>
         </div>
     )
