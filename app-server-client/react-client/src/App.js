@@ -107,7 +107,7 @@ class App extends Component {
   }
 
   _zoomChanged() {
-    console.log('_zoomChanged:', this.state.map.getZoom())
+    console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
   render() {
