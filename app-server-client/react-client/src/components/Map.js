@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { withGoogleMap, GoogleMap, Marker, Polyline } from 'react-google-maps'
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:3001'

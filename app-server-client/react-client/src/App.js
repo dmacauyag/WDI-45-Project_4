@@ -18,6 +18,7 @@ class App extends Component {
       mql: mql,
       segments: [],
       currentSegmentElement: null,
+      currentSegmentPolyline: null,
       map: null,
       bounds: null,
       currentUser: null,
@@ -110,9 +111,9 @@ class App extends Component {
     console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
-  _handleFavorite(evt) {
+  _handleBookmark(evt) {
     evt.preventDefault()
-    console.log("Favorited item", evt.target.id)
+    console.log("Bookmarked item", evt.target.id)
 
     // return axios({
     //   url: '/api/segments',
@@ -147,13 +148,14 @@ class App extends Component {
           <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
           <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
           <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
-          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._handleFavorite.bind(this)}>Bookmark Segment</button>
+          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._handleBookmark.bind(this)}>Bookmark Segment</button>
           <hr />
         </ul>
       )
 
       this.setState({
-        currentSegmentElement: currentSegmentElement
+        currentSegmentElement: currentSegmentElement,
+        currentSegmentPolyline: currentSegment.map.polyline
       })
     })
   }
@@ -214,6 +216,7 @@ class App extends Component {
                         zoom={14}
                         center={location}
                         segments={this.state.segments}
+                        polyline={this.state.currentSegmentPolyline}
                         ref={this._mapLoaded.bind(this)}
                         onDragEnd={this._mapMoved.bind(this)}
                         onZoomChanged={this._zoomChanged.bind(this)}
