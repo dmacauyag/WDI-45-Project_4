@@ -3,14 +3,6 @@ import React, { Component } from 'react'
 class Sidebar extends Component {
 
   render() {
-    const segmentElements = this.props.segments.map((segment, i) => {
-      return (
-        <li key={i}>
-          {segment.name}
-        </li>
-      )
-    })
-
     return (
       <div className="nav-container nav-container--sidebar">
 			<div className="nav-sidebar-column bg--dark">
@@ -30,7 +22,7 @@ class Sidebar extends Component {
               <div className="text-block">
 	                <ul className="menu-vertical">
 	                    <li><h4>Current Segments</h4></li>
-                      {segmentElements}
+                      {this.props.segments}
 	                </ul>
 	            </div>
 	            <hr />

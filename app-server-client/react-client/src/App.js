@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 import axios from 'axios'
 import './App.css'
 import clientAuth from './clientAuth'
@@ -110,17 +109,30 @@ class App extends Component {
     console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
+  _handleFavorite() {
+    console.log("Favorited item")
+  }
+//////////////////////////////////////////////////////////////
   render() {
     const location = {
       lat: 37.832429,
       lng: -122.479534
     }
 
+    const segmentElements = this.state.segments.map((segment, i) => {
+      return (
+        <li key={i} id={segment.id}>
+          <span onClick={this._handleFavorite.bind(this)} className="glyphicon glyphicon-heart-empty" aria-hidden="false"></span>
+          <span>{segment.name}</span>
+        </li>
+      )
+    })
+
     return (
       <div>
         <div>
           <Sidebar
-            segments={this.state.segments}
+            segments={segmentElements}
           />
               <div className="main-container">
 
