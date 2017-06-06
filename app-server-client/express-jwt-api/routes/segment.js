@@ -14,5 +14,13 @@ segmentsRouter.route('/')
       res.json(segments)
     })
   })
+  .post((req, res) => {
+    const newSegment = new Segment(req.body)
+    newSegment.user = req.decoded._id
+    newSegment.save((err, segment) => {
+      if(err) return console.log(err)
+      res.json({success: true, message: "New segment created.", segment})
+    })
+  })
 
 module.exports = segmentsRouter

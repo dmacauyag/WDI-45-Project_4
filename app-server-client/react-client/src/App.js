@@ -17,6 +17,7 @@ class App extends Component {
     this.state = {
       mql: mql,
       segments: [],
+      currentSegmentElement: null,
       map: null,
       bounds: null,
       currentUser: null,
@@ -112,6 +113,49 @@ class App extends Component {
   _handleFavorite(evt) {
     evt.preventDefault()
     console.log("Favorited item", evt.target.id)
+
+    // return axios({
+    //   url: '/api/segments',
+    //   method: 'post',
+    //   data: {
+    //     id: ,
+    //     name: ,
+    //     distance:
+    //   }
+    // })
+    // .then(res => {
+    //   console.log(res)
+    // })
+  }
+
+  _getSegment(evt) {
+    evt.preventDefault()
+    console.log("Get segment info from strava for:", evt.target.id)
+
+    return axios({
+      url:`/api/strava/segments/${evt.target.id}`,
+      method: 'get'
+    })
+    .then(res => {
+      console.log(res.data.data)
+
+      const currentSegment = res.data.data
+      const currentSegmentElement = (
+        <ul>
+          <li><h4><strong>Selected Segment</strong></h4></li>
+          <li><strong>Name:</strong> {currentSegment.name}</li>
+          <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
+          <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
+          <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
+          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._handleFavorite.bind(this)}>Bookmark Segment</button>
+          <hr />
+        </ul>
+      )
+
+      this.setState({
+        currentSegmentElement: currentSegmentElement
+      })
+    })
   }
 //////////////////////////////////////////////////////////////
   render() {
@@ -123,8 +167,7 @@ class App extends Component {
     const segmentElements = this.state.segments.map((segment, i) => {
       return (
         <li key={i} id={segment.id}>
-          <span id={segment.id} onClick={this._handleFavorite.bind(this)} className="glyphicon glyphicon-heart-empty" aria-hidden="false"></span>
-          <span>{segment.name}</span>
+          <span id={segment.id} onClick={this._getSegment.bind(this)} >{segment.name}</span>
         </li>
       )
     })
@@ -134,6 +177,7 @@ class App extends Component {
         <div>
           <Sidebar
             segments={segmentElements}
+            currentSegment={this.state.currentSegmentElement}
           />
               <div className="main-container">
 

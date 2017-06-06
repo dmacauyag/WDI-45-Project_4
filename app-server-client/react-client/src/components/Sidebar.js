@@ -21,7 +21,8 @@ class Sidebar extends Component {
 	            <hr />
               <div className="text-block">
 	                <ul className="menu-vertical">
-	                    <li><h4>Current Segments</h4></li>
+                      {this.props.currentSegment}
+	                    <li><h4>Current Map Segments</h4></li>
                       {this.props.segments}
 	                </ul>
 	            </div>
