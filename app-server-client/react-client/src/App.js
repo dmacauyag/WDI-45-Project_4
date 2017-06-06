@@ -1,20 +1,25 @@
 import React, { Component } from 'react'
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import axios from 'axios'
 import './App.css'
 import clientAuth from './clientAuth'
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
-import Map from './Map.js'
-
+import Map from './components/Map.js'
+//////////////////////////////////////////////////////////////
 const mql = window.matchMedia(`(min-width: 800px)`)
-
+//////////////////////////////////////////////////////////////
 class App extends Component {
 
   constructor() {
     super()
     this.state = {
       mql: mql,
+      segments: [],
+      map: null,
+      bounds: null,
       currentUser: null,
       loggedIn: false,
       view: 'home'
@@ -28,7 +33,7 @@ class App extends Component {
       loggedIn: !!currentUser
     })
   }
-
+//////////////////////////////////////////////////////////////
   _signUp(newUser) {
     clientAuth.signUp(newUser).then((data) => {
       const currentUser = clientAuth.getCurrentUser()
@@ -69,7 +74,42 @@ class App extends Component {
       view: view
     })
   }
+//////////////////////////////////////////////////////////////
+  _mapLoaded(map) {
+    console.log('_mapLoaded')
+    if (this.state.map != null)
+      return
+    this.setState({
+      map: map
+    })
+  }
 
+  _mapMoved() {
+    console.log('_mapMoved center:', JSON.stringify(this.state.map.state.map.getCenter()))
+
+    const bounds = this.state.map.state.map.getBounds()
+    const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
+
+    return axios({
+      url: '/api/strava/segments',
+      method: 'post',
+      data: {boundary: boundaryStr}
+    })
+    .then(res => {
+      console.log(res.data.data.segments)
+      this.setState({
+        segments: [
+          ...res.data.data.segments
+        ],
+        bounds: boundaryStr
+      })
+    })
+  }
+
+  _zoomChanged() {
+    console.log('_zoomChanged:', this.state.map.getZoom())
+  }
+//////////////////////////////////////////////////////////////
   render() {
     const location = {
       lat: 37.832429,
@@ -94,12 +134,17 @@ class App extends Component {
             <Map
               zoom={14}
               center={location}
+              segments={this.state.segments}
+              ref={this._mapLoaded.bind(this)}
+              onDragEnd={this._mapMoved.bind(this)}
+              onZoomChanged={this._zoomChanged.bind(this)}
               containerElement={<div style={{ height: `100%` }} />}
-              mapElement={<div style={{ height: `100%` }} />} />
+              mapElement={<div style={{ height: `100%` }} />}
+            />
           </div>
         </div>
     )
   }
 }
-
+//////////////////////////////////////////////////////////////
 export default App
