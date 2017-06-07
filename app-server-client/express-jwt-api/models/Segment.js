@@ -6,6 +6,8 @@ const
     name: {type: String},
     activityType: {type: String, default: 'Ride'},
     distance: {type: Number},
+    city: {type: String},
+    state: {type: String},
     polyline: {type: String}
   })
 

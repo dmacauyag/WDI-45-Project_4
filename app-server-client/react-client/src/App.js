@@ -140,6 +140,8 @@ class App extends Component {
       name: this.state.currentSegment.name,
       activityType: this.state.currentSegment.activity_type,
       distance: this.state.currentSegment.distance,
+      city: this.state.currentSegment.city,
+      state: this.state.currentSegment.state,
       polyline: this.state.currentSegment.map.polyline
     }
 
@@ -182,6 +184,7 @@ class App extends Component {
         <ul>
           <li><h4><strong>Selected Segment</strong></h4></li>
           <li><strong>Name:</strong> {currentSegment.name}</li>
+          <li><strong>Location:</strong> {currentSegment.city}, {currentSegment.state}</li>
           <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
           <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
           <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
@@ -212,6 +215,7 @@ class App extends Component {
         <li key={i} id={segment.stravaId}>
           <span id={segment.stravaId} onClick={this._getSegment.bind(this)} >{segment.name}</span>
           <span id={segment._id} style={{float:'right'}} className="glyphicon glyphicon-trash" aria-hidden="true" onClick={this._deleteBookmark.bind(this)}></span>
+          <p><i>{segment.city}, {segment.state}</i></p>
         </li>
       )
     })
