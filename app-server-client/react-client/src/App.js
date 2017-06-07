@@ -137,6 +137,11 @@ class App extends Component {
     })
   }
 
+  _deleteBookmark(evt) {
+    evt.preventDefault()
+    console.log("Delete bookmark:", evt.target.id)
+  }
+  //////////////////////////////////////////////////////////////
   _getSegment(evt) {
     evt.preventDefault()
     console.log("Get segment info from strava for:", evt.target.id)
@@ -178,6 +183,7 @@ class App extends Component {
       return (
         <li key={i} id={segment.stravaId}>
           <span id={segment.stravaId} onClick={this._getSegment.bind(this)} >{segment.name}</span>
+          <span id={segment._id} style={{float:'right'}} className="glyphicon glyphicon-trash" aria-hidden="true" onClick={this._deleteBookmark.bind(this)}></span>
         </li>
       )
     })
