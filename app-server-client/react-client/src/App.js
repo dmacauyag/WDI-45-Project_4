@@ -143,6 +143,10 @@ class App extends Component {
       })
     })
   }
+
+  _markerClicked(evt) {
+    console.log('marker was clicked:', evt);
+  }
 //////////////////////////////////////////////////////////////
   _addBookmark(evt) {
     evt.preventDefault()
@@ -313,6 +317,7 @@ class App extends Component {
                         segments={this.state.segments}
                         currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}
+                        onMarkerClick={this._markerClicked.bind(this)}
                         onDragEnd={this._mapMoved.bind(this)}
                         onZoomChanged={this._zoomChanged.bind(this)}
                         containerElement={<div style={{ height: `100%` }} />}

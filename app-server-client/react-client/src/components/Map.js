@@ -55,9 +55,13 @@ class Map extends Component {
         position: {
           lat: segment.start_latlng[0],
           lng: segment.start_latlng[1]
-        }
+        },
+        segmentId: segment.id
       }
-      return <Marker key={i} {...marker} />
+      return <Marker
+              key={i}
+              onClick={this.props.onMarkerClick}
+              {...marker} />
     })
 
     return (
