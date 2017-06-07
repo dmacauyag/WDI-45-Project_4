@@ -34,6 +34,19 @@ class App extends Component {
   }
 
   componentDidMount() {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const coords = pos.coords
+        console.log('user coords', coords)
+        this.setState({
+          mapCenter: {
+            lat: coords.latitude,
+            lng: coords.longitude
+          }
+        })
+      })
+    }
+
     const currentUser = clientAuth.getCurrentUser()
     clientAuth.getBookmarks().then(res => {
       this.setState({
