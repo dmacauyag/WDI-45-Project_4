@@ -176,8 +176,8 @@ class App extends Component {
 
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
-        <li key={i} id={segment.id}>
-          <span id={segment.id}>{segment.name}</span>
+        <li key={i} id={segment.stravaId}>
+          <span id={segment.stravaId} onClick={this._getSegment.bind(this)} >{segment.name}</span>
         </li>
       )
     })
