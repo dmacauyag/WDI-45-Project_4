@@ -99,10 +99,24 @@ class App extends Component {
     const bounds = this.state.map.state.map.getBounds()
     const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
 
+    this._loadNewMapSegments(boundaryStr)
+  }
+
+  _zoomChanged() {
+    console.log('_zoomChanged:', this.state.map.state.map.getZoom())
+
+    const bounds = this.state.map.state.map.getBounds()
+    const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
+
+    this._loadNewMapSegments(boundaryStr)  
+  }
+
+  _loadNewMapSegments(bounds) {
+    console.log('retrieving new strava segments')
     return axios({
       url: '/api/strava/segments',
       method: 'post',
-      data: {boundary: boundaryStr}
+      data: {boundary: bounds}
     })
     .then(res => {
       console.log(res.data.data.segments)
@@ -110,13 +124,9 @@ class App extends Component {
         segments: [
           ...res.data.data.segments
         ],
-        bounds: boundaryStr
+        bounds: bounds
       })
     })
-  }
-
-  _zoomChanged() {
-    console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
   _addBookmark(evt) {
