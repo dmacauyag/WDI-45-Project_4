@@ -24,6 +24,16 @@ segmentsRouter.route('/')
   })
 
 segmentsRouter.route('/:id')
+  .patch((req, res) => {
+    Segment.findById(req.params.id, (err, segment) => {
+      if(err) return console.log(err)
+      segment.timesCompleted += req.body.incrementor
+      segment.save((err, segment) => {
+        if(err) return console.log(err)
+        res.json({success: true, message: "Segment updated.", segment})
+      })
+    })
+  })
   .delete((req, res) => {
     Segment.findByIdAndRemove(req.params.id, (err, segment) => {
       if(err) return console.log(err)

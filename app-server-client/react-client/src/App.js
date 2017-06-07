@@ -20,6 +20,7 @@ class App extends Component {
       segments: [],
       segmentType: 'riding',
       bookmarks: [],
+      updatedBookmark: null,
       currentSegmentElement: null,
       currentSegment: null,
       map: null,
@@ -182,9 +183,38 @@ class App extends Component {
     })
   }
 
-  _updateBookmark(evt) {
+  _updateBookmarkPlus(evt) {
     evt.preventDefault()
-    console.log('update bookmark by:', evt.target)
+    const id = evt.target.id
+    console.log('update bookmark +1 by:', id)
+
+    clientAuth.updateBookmarkPlus(id).then(res => {
+      const updatedSegment = res.data.segment
+      this._updateBookmarkList(updatedSegment)
+    })
+  }
+
+  _updateBookmarkMinus(evt) {
+    evt.preventDefault()
+    const id = evt.target.id
+    console.log('update bookmark -1 by:', id)
+
+    clientAuth.updateBookmarkMinus(id).then(res => {
+      const updatedSegment = res.data.segment
+      this._updateBookmarkList(updatedSegment)
+    })
+  }
+
+  _updateBookmarkList(updatedSegment) {
+    this.setState({
+      bookmarks: this.state.bookmarks.map((segment, i) => {
+        if (updatedSegment._id !== segment._id) {
+          return segment
+        } else {
+          return updatedSegment
+        }
+      })
+    })
   }
 
   _deleteBookmark(evt) {
@@ -249,8 +279,8 @@ class App extends Component {
           <p style={{margin: 0}}><i>{segment.city}, {segment.state}</i></p>
           <p style={{margin: 0}}>Times Completed: {segment.timesCompleted}</p>
           <div>
-            <span value="1" id={segment._id} className="glyphicon glyphicon-plus" aria-hidden="true" onClick={this._updateBookmark.bind(this)}></span>
-            <span value="-1" id={segment._id} className="glyphicon glyphicon-minus" aria-hidden="true" onClick={this._updateBookmark.bind(this)} style={{paddingLeft:'10px'}}></span>
+            <span value="1" id={segment._id} className="glyphicon glyphicon-plus" aria-hidden="true" onClick={this._updateBookmarkPlus.bind(this)}></span>
+            <span value="-1" id={segment._id} className="glyphicon glyphicon-minus" aria-hidden="true" onClick={this._updateBookmarkMinus.bind(this)} style={{paddingLeft:'10px'}}></span>
             <span id={segment._id} className="glyphicon glyphicon-trash" aria-hidden="true" onClick={this._deleteBookmark.bind(this)} style={{paddingLeft:'10px'}}></span>
           </div>
           <hr className="short" />

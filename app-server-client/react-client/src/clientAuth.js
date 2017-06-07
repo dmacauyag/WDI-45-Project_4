@@ -73,6 +73,26 @@ const clientAuth = {
     })
   },
 
+  updateBookmarkPlus: (id) => {
+    return axios({
+      url: `/api/segments/${id}`,
+      method: 'patch',
+      data: {
+        incrementor: 1
+      }
+    })
+  },
+
+  updateBookmarkMinus: (id) => {
+    return axios({
+      url: `/api/segments/${id}`,
+      method: 'patch',
+      data: {
+        incrementor: -1
+      }
+    })
+  },
+
   deleteBookmark: (id) => {
     return axios({
       url: `/api/segments/${id}`,
