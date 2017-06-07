@@ -182,6 +182,11 @@ class App extends Component {
     })
   }
 
+  _updateBookmark(evt) {
+    evt.preventDefault()
+    console.log('update bookmark by:', evt.target)
+  }
+
   _deleteBookmark(evt) {
     evt.preventDefault()
     const id = evt.target.id
@@ -240,9 +245,15 @@ class App extends Component {
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
         <li key={i} id={segment.stravaId}>
-          <span id={segment.stravaId} onClick={this._getSegment.bind(this)} >{segment.name}</span>
-          <span id={segment._id} style={{float:'right'}} className="glyphicon glyphicon-trash" aria-hidden="true" onClick={this._deleteBookmark.bind(this)}></span>
-          <p><i>{segment.city}, {segment.state}</i></p>
+          <span id={segment.stravaId} onClick={this._getSegment.bind(this)} ><strong>{segment.name}</strong></span>
+          <p style={{margin: 0}}><i>{segment.city}, {segment.state}</i></p>
+          <p style={{margin: 0}}>Times Completed: {segment.timesCompleted}</p>
+          <div>
+            <span value="1" id={segment._id} className="glyphicon glyphicon-plus" aria-hidden="true" onClick={this._updateBookmark.bind(this)}></span>
+            <span value="-1" id={segment._id} className="glyphicon glyphicon-minus" aria-hidden="true" onClick={this._updateBookmark.bind(this)} style={{paddingLeft:'10px'}}></span>
+            <span id={segment._id} className="glyphicon glyphicon-trash" aria-hidden="true" onClick={this._deleteBookmark.bind(this)} style={{paddingLeft:'10px'}}></span>
+          </div>
+          <hr className="short" />
         </li>
       )
     })
@@ -309,6 +320,7 @@ class App extends Component {
                                 <p className="lead">
                                   Navigate the map below to find running and/or cycling segments.
                                 </p>
+                                <hr className="short" />
                                 <div className="form-group">
                                   <label>Segment Type:</label>
                                   <select className="form-control" onChange={this._handleSegmentSelect.bind(this)}>
@@ -316,7 +328,6 @@ class App extends Component {
                                     <option value="running">Running</option>
                                   </select>
                                 </div>
-                                <hr className="short" />
                               </div>
                             </div>
                           </div>
