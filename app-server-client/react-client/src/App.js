@@ -4,7 +4,6 @@ import './App.css'
 import clientAuth from './clientAuth'
 import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
-import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import Button from './components/Button'
 import Map from './components/Map.js'
@@ -23,6 +22,7 @@ class App extends Component {
       updatedBookmark: null,
       currentSegmentElement: null,
       currentSegment: null,
+      currentSegmentPolyline: null,
       map: null,
       mapCenter: {
         lat: 37.832429,
@@ -155,8 +155,8 @@ class App extends Component {
     })
   }
 
-  _markerClicked(evt) {
-    console.log('marker was clicked:', evt);
+  _markerClicked(id) {
+    console.log('marker was clicked:', id);
   }
 //////////////////////////////////////////////////////////////
   _addBookmark(evt) {
@@ -258,6 +258,7 @@ class App extends Component {
       this.setState({
         currentSegmentElement: currentSegmentElement,
         currentSegment: currentSegment,
+        currentSegmentPolyline: currentSegment.map.polyline,
         mapCenter: {
           lat: currentSegment.start_latitude,
           lng: currentSegment.start_longitude
@@ -373,6 +374,7 @@ class App extends Component {
                         zoom={14}
                         center={this.state.mapCenter}
                         segments={this.state.segments}
+                        polyline={this.state.currentSegmentPolyline}
                         currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}
                         onMarkerClick={this._markerClicked.bind(this)}
@@ -383,8 +385,6 @@ class App extends Component {
                       />
                         </div>
                   </section>
-
-                    {/* <Footer /> */}
                 </div>
           </div>
         </div>

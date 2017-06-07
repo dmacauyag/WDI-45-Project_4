@@ -4,6 +4,44 @@ import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:3001'
 
+// function to decode google maps api polyline taken from:
+// https://gist.github.com/ismaels/6636986
+// source: http://doublespringlabs.blogspot.com.br/2012/11/decoding-polylines-from-google-maps.html
+function decodePolyline(encoded){
+
+    // array that holds the points
+
+    var points=[ ]
+    var index = 0, len = encoded.length;
+    var lat = 0, lng = 0;
+    while (index < len) {
+        var b, shift = 0, result = 0;
+        do {
+
+    b = encoded.charAt(index++).charCodeAt(0) - 63;//finds ascii                                                                                    //and substract it by 63
+              result |= (b & 0x1f) << shift;
+              shift += 5;
+             } while (b >= 0x20);
+
+
+       var dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+       lat += dlat;
+      shift = 0;
+      result = 0;
+     do {
+        b = encoded.charAt(index++).charCodeAt(0) - 63;
+        result |= (b & 0x1f) << shift;
+       shift += 5;
+         } while (b >= 0x20);
+     var dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+     lng += dlng;
+
+   points.push({lat:( lat / 1E5),lng:( lng / 1E5)})
+
+  }
+  return points
+    }
+
 class Map extends Component {
   // constructor() {
   //   super()
@@ -49,6 +87,10 @@ class Map extends Component {
   //   console.log('_zoomChanged:', this.state.map.getZoom())
   // }
 
+  _handleClickMarker(id) {
+    this.props.onMarkerClick(id)
+  }
+
   render() {
     const markers = this.props.segments.map((segment, i) => {
       const marker = {
@@ -60,9 +102,13 @@ class Map extends Component {
       }
       return <Marker
               key={i}
-              onClick={this.props.onMarkerClick}
+              onClick={this._handleClickMarker.bind(this, segment.id)}
               {...marker} />
     })
+
+    const decodedPolyline = this.props.polyline
+      ? decodePolyline(this.props.polyline)
+      : []
 
     return (
       <GoogleMap
@@ -72,6 +118,7 @@ class Map extends Component {
         defaultZoom={this.props.zoom}
         center={this.props.center} >
         {markers}
+        <Polyline path={decodedPolyline} />
       </GoogleMap>
     )
   }
