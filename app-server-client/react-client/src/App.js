@@ -6,6 +6,7 @@ import SignUp from './components/SignUp'
 import LogIn from './components/LogIn'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
+import Button from './components/Button'
 import Map from './components/Map.js'
 //////////////////////////////////////////////////////////////
 const mql = window.matchMedia(`(min-width: 800px)`)
@@ -38,7 +39,7 @@ class App extends Component {
       this.setState({
         currentUser: currentUser,
         loggedIn: !!currentUser,
-        bookmarks: res.data
+        bookmarks: res.data || []
       })
     })
   }
@@ -71,7 +72,8 @@ class App extends Component {
       this.setState({
         currentUser: null,
         loggedIn: false,
-        view: 'home'
+        view: 'home',
+        bookmarks: []
       })
     })
   }
@@ -108,7 +110,7 @@ class App extends Component {
     const bounds = this.state.map.state.map.getBounds()
     const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
 
-    this._loadNewMapSegments(boundaryStr)  
+    this._loadNewMapSegments(boundaryStr)
   }
 
   _loadNewMapSegments(bounds) {
@@ -203,6 +205,8 @@ class App extends Component {
   }
 //////////////////////////////////////////////////////////////
   render() {
+    const isLoggedIn = this.state.loggedIn
+
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
         <li key={i} id={segment.stravaId}>
@@ -220,22 +224,49 @@ class App extends Component {
       )
     })
 
+    var navButtons = null
+
+    if (isLoggedIn) {
+      navButtons = (
+        <div style={{textAlign: 'center'}}>
+          <Button
+            label='Log Out'
+            name='login'
+            className='btn-link'
+            onClick={this._logOut.bind(this)}
+          />
+        </div>
+      )
+    } else {
+      navButtons = (
+        <div style={{textAlign: 'center'}}>
+          <Button
+            label='Sign Up'
+            name='signup'
+            className='btn-link'
+            onClick={this._setView.bind(this)}
+          />
+          <span className='	glyphicon glyphicon-option-vertical'></span>
+          <Button
+            label='Log In'
+            name='login'
+            className='btn-link'
+            onClick={this._setView.bind(this)}
+          />
+        </div>
+      )
+    }
+
     return (
       <div>
         <div>
           <Sidebar
+            navButtons={navButtons}
             bookmarks={bookmarkElements}
             segments={segmentElements}
             currentSegment={this.state.currentSegmentElement}
           />
               <div className="main-container">
-
-                <div>
-                  <button name='signup' onClick={this._setView.bind(this)}>Sign Up</button>
-                  <button name='login' onClick={this._setView.bind(this)}>Log In</button>
-                  <button onClick={this._logOut.bind(this)}>Log Out</button>
-                </div>
-
                   {{
                     home:
                       <section className="imagebg image--light cover cover-blocks bg--secondary" style={{padding: 0}}>
@@ -269,7 +300,7 @@ class App extends Component {
                         onZoomChanged={this._zoomChanged.bind(this)}
                         containerElement={<div style={{ height: `100%` }} />}
                         mapElement={<div style={{ height: `100%` }} />}
-                        />
+                      />
                         </div>
                   </section>
 
