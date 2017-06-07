@@ -8,7 +8,7 @@ class Sidebar extends Component {
 			<div className="nav-sidebar-column bg--dark">
 	            <div className="text-center text-block">
 	                <a href="/">
-	                    <h2><strong>Let's Move</strong></h2>
+	                    <h2 style={{fontFamily: 'Black Ops One, cursive', color: 'deepskyblue'}}>Let's Move</h2>
 	                </a>
 	                <p>Find your next activity.</p>
 	            </div>
