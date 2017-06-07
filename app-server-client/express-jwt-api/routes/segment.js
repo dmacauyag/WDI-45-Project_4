@@ -23,4 +23,12 @@ segmentsRouter.route('/')
     })
   })
 
+segmentsRouter.route('/:id')
+  .delete((req, res) => {
+    Segment.findByIdAndRemove(req.params.id, (err, segment) => {
+      if(err) return console.log(err)
+      res.json({success: true, message: "Segment deleted.", segment})
+    })
+  })
+
 module.exports = segmentsRouter

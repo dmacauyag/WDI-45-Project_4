@@ -139,7 +139,15 @@ class App extends Component {
 
   _deleteBookmark(evt) {
     evt.preventDefault()
-    console.log("Delete bookmark:", evt.target.id)
+    const id = evt.target.id
+    
+    clientAuth.deleteBookmark(id).then(res => {
+      this.setState({
+        bookmarks: this.state.bookmarks.filter((segment) => {
+          return segment._id !== id
+        })
+      })
+    })
   }
   //////////////////////////////////////////////////////////////
   _getSegment(evt) {

@@ -71,6 +71,13 @@ const clientAuth = {
       method: 'post',
       data: newBookmark
     })
+  },
+
+  deleteBookmark: (id) => {
+    return axios({
+      url: `/api/segments/${id}`,
+      method: 'delete'
+    })
   }
 }
 

@@ -2,7 +2,7 @@ const
   mongoose = require('mongoose'),
   segmentSchema = new mongoose.Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    stravaId: {type: Number},
+    stravaId: {type: Number, unique: true},
     name: {type: String},
     activityType: {type: String, default: 'Ride'},
     distance: {type: Number},
