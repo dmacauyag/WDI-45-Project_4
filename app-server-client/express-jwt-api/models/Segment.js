@@ -8,7 +8,7 @@ const
     distance: {type: Number},
     city: {type: String},
     state: {type: String},
-    timesCompleted: {type: Number, default: 0},
+    timesCompleted: {type: Number, default: 0, min: 0},
     polyline: {type: String}
   })
 
