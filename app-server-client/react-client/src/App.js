@@ -21,6 +21,10 @@ class App extends Component {
       currentSegmentElement: null,
       currentSegment: null,
       map: null,
+      mapCenter: {
+        lat: 37.832429,
+        lng: -122.479534
+      },
       bounds: null,
       currentUser: null,
       loggedIn: false,
@@ -140,7 +144,7 @@ class App extends Component {
   _deleteBookmark(evt) {
     evt.preventDefault()
     const id = evt.target.id
-    
+
     clientAuth.deleteBookmark(id).then(res => {
       this.setState({
         bookmarks: this.state.bookmarks.filter((segment) => {
@@ -176,17 +180,19 @@ class App extends Component {
 
       this.setState({
         currentSegmentElement: currentSegmentElement,
-        currentSegment: currentSegment
+        currentSegment: currentSegment,
+        mapCenter: {
+          lat: currentSegment.start_latitude,
+          lng: currentSegment.start_longitude
+        },
+        segments: [
+          currentSegment
+        ]
       })
     })
   }
 //////////////////////////////////////////////////////////////
   render() {
-    const location = {
-      lat: 37.832429,
-      lng: -122.479534
-    }
-
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
         <li key={i} id={segment.stravaId}>
@@ -245,7 +251,7 @@ class App extends Component {
                     <div className="container" style={{padding: 0, height: `500px`}}>
                       <Map
                         zoom={14}
-                        center={location}
+                        center={this.state.mapCenter}
                         segments={this.state.segments}
                         currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}

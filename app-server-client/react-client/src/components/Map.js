@@ -66,7 +66,7 @@ class Map extends Component {
         onDragEnd={this.props.onDragEnd}
         onZoomChanged={this.props.onZoomChanged}
         defaultZoom={this.props.zoom}
-        defaultCenter={this.props.center} >
+        center={this.props.center} >
         {markers}
       </GoogleMap>
     )
