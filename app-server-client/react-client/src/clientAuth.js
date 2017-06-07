@@ -4,6 +4,13 @@ import jwt_decode from 'jwt-decode'
 axios.defaults.baseURL = 'http://localhost:3001'
 
 const clientAuth = {
+  setTokenHeader: () => {
+    const token = localStorage.getItem('token')
+    if (token) {
+      axios.defaults.headers.common['x-access-token'] = localStorage.getItem('token')
+    }
+  },
+  
   signUp: (userInfo) => {
     return axios({
       url: '/api/users',
@@ -49,7 +56,17 @@ const clientAuth = {
       delete axios.defaults.headers.common['x-access-token']
       resolve("bye.")
     })
+  },
+
+  addBookmark: (newBookmark) => {
+    return axios({
+      url: '/api/segments',
+      method: 'post',
+      data: newBookmark
+    })
   }
 }
+
+clientAuth.setTokenHeader()
 
 export default clientAuth

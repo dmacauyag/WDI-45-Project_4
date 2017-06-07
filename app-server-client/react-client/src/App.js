@@ -18,7 +18,7 @@ class App extends Component {
       mql: mql,
       segments: [],
       currentSegmentElement: null,
-      currentSegmentPolyline: null,
+      currentSegment: null,
       map: null,
       bounds: null,
       currentUser: null,
@@ -111,22 +111,21 @@ class App extends Component {
     console.log('_zoomChanged:', this.state.map.state.map.getZoom())
   }
 //////////////////////////////////////////////////////////////
-  _handleBookmark(evt) {
+  _addBookmark(evt) {
     evt.preventDefault()
     console.log("Bookmarked item", evt.target.id)
 
-    // return axios({
-    //   url: '/api/segments',
-    //   method: 'post',
-    //   data: {
-    //     id: ,
-    //     name: ,
-    //     distance:
-    //   }
-    // })
-    // .then(res => {
-    //   console.log(res)
-    // })
+    const newBookmark = {
+      stravaId: this.state.currentSegment.id,
+      name: this.state.currentSegment.name,
+      activityType: this.state.currentSegment.activity_type,
+      distance: this.state.currentSegment.distance,
+      polyline: this.state.currentSegment.map.polyline
+    }
+
+    clientAuth.addBookmark(newBookmark).then(res => {
+      console.log(res)
+    })
   }
 
   _getSegment(evt) {
@@ -148,14 +147,14 @@ class App extends Component {
           <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
           <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
           <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
-          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._handleBookmark.bind(this)}>Bookmark Segment</button>
+          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._addBookmark.bind(this)}>Bookmark Segment</button>
           <hr />
         </ul>
       )
 
       this.setState({
         currentSegmentElement: currentSegmentElement,
-        currentSegmentPolyline: currentSegment.map.polyline
+        currentSegment: currentSegment
       })
     })
   }
@@ -216,7 +215,7 @@ class App extends Component {
                         zoom={14}
                         center={location}
                         segments={this.state.segments}
-                        polyline={this.state.currentSegmentPolyline}
+                        currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}
                         onDragEnd={this._mapMoved.bind(this)}
                         onZoomChanged={this._zoomChanged.bind(this)}
