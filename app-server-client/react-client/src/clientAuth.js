@@ -10,7 +10,7 @@ const clientAuth = {
       axios.defaults.headers.common['x-access-token'] = localStorage.getItem('token')
     }
   },
-  
+
   signUp: (userInfo) => {
     return axios({
       url: '/api/users',
@@ -55,6 +55,13 @@ const clientAuth = {
       localStorage.clear()
       delete axios.defaults.headers.common['x-access-token']
       resolve("bye.")
+    })
+  },
+
+  getBookmarks: () => {
+    return axios({
+      url: '/api/segments',
+      method: 'get'
     })
   },
 

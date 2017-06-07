@@ -17,6 +17,7 @@ class App extends Component {
     this.state = {
       mql: mql,
       segments: [],
+      bookmarks: [],
       currentSegmentElement: null,
       currentSegment: null,
       map: null,
@@ -29,9 +30,12 @@ class App extends Component {
 
   componentDidMount() {
     const currentUser = clientAuth.getCurrentUser()
-    this.setState({
-      currentUser: currentUser,
-      loggedIn: !!currentUser
+    clientAuth.getBookmarks().then(res => {
+      this.setState({
+        currentUser: currentUser,
+        loggedIn: !!currentUser,
+        bookmarks: res.data
+      })
     })
   }
 //////////////////////////////////////////////////////////////
@@ -124,7 +128,12 @@ class App extends Component {
     }
 
     clientAuth.addBookmark(newBookmark).then(res => {
-      console.log(res)
+      this.setState({
+        bookmarks: [
+          ...this.state.bookmarks,
+          res.data.segment
+        ]
+      })
     })
   }
 
@@ -165,6 +174,14 @@ class App extends Component {
       lng: -122.479534
     }
 
+    const bookmarkElements = this.state.bookmarks.map((segment, i) => {
+      return (
+        <li key={i} id={segment.id}>
+          <span id={segment.id}>{segment.name}</span>
+        </li>
+      )
+    })
+
     const segmentElements = this.state.segments.map((segment, i) => {
       return (
         <li key={i} id={segment.id}>
@@ -177,6 +194,7 @@ class App extends Component {
       <div>
         <div>
           <Sidebar
+            bookmarks={bookmarkElements}
             segments={segmentElements}
             currentSegment={this.state.currentSegmentElement}
           />

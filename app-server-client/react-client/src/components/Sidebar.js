@@ -16,6 +16,7 @@ class Sidebar extends Component {
 	            <div className="text-block">
 	                <ul className="menu-vertical">
 	                    <li><h4>Bookmarked Segments</h4></li>
+                      {this.props.bookmarks}
 	                </ul>
 	            </div>
 	            <hr />
