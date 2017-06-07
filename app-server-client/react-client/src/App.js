@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       mql: mql,
       segments: [],
+      segmentType: 'riding',
       bookmarks: [],
       currentSegmentElement: null,
       currentSegment: null,
@@ -98,6 +99,12 @@ class App extends Component {
       view: view
     })
   }
+
+  _handleSegmentSelect(evt) {
+    this.setState({
+      segmentType: evt.target.value
+    })
+  }
 //////////////////////////////////////////////////////////////
   _mapLoaded(map) {
     console.log('_mapLoaded')
@@ -131,7 +138,10 @@ class App extends Component {
     return axios({
       url: '/api/strava/segments',
       method: 'post',
-      data: {boundary: bounds}
+      data: {
+        boundary: bounds,
+        activityType: this.state.segmentType
+      }
     })
     .then(res => {
       console.log(res.data.data.segments)
@@ -299,6 +309,13 @@ class App extends Component {
                                 <p className="lead">
                                   Navigate the map below to find running and/or cycling segments.
                                 </p>
+                                <div className="form-group">
+                                  <label>Segment Type:</label>
+                                  <select className="form-control" onChange={this._handleSegmentSelect.bind(this)}>
+                                    <option value="riding">Cycling</option>
+                                    <option value="running">Running</option>
+                                  </select>
+                                </div>
                                 <hr className="short" />
                               </div>
                             </div>
