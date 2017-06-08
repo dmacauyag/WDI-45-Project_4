@@ -1,4 +1,4 @@
-![](public/images/letsmove.png)
+![Screenshot](public/images/letsmove.png)
 
 # **Let's Move**
 
@@ -57,10 +57,10 @@ In addition:
 - As a user, when I select a running or cycling segment, I want to visually see the route on the map as well as markers to highlight for where the segment begins and ends.
 
 ## Wireframe:
-![](public/images/wireframe.png)
+![Screenshot](public/images/wireframe.png)
 
 ## ERD Diagram:
-![](public/images/erd-diagram.png)
+![Screenshot](public/images/erd-diagram.png)
 
 ## MVP:
 - Implement two models: users and segments.
