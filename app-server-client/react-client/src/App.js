@@ -79,6 +79,12 @@ class App extends Component {
         currentUser: user,
         loggedIn: true,
         view: 'home'
+      }, () => {
+        clientAuth.getBookmarks().then(res => {
+          this.setState({
+            bookmarks: res.data || []
+          })
+        })
       })
     })
   }
