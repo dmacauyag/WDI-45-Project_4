@@ -18,6 +18,7 @@ class App extends Component {
       mql: mql,
       segments: [],
       segmentSelected: 'riding',
+      isBookmarkSelected: false,
       isSegmentSelected: false,
       activityType: 'riding',
       bookmarks: [],
@@ -190,7 +191,8 @@ class App extends Component {
         bookmarks: [
           ...this.state.bookmarks,
           res.data.segment
-        ]
+        ],
+        isBookmarkSelected: true 
       })
     })
   }
@@ -247,10 +249,27 @@ class App extends Component {
     console.log("Get segment info from strava for:", evt.target.id)
     const id = evt.target.id
 
+    this._isSegmentBookmarked(id)
+
+    this._getSegmentFromStrava(id)
+  }
+
+  _getBookmarkedSegment(evt) {
+    evt.preventDefault()
+    console.log("Get segment info for the bookmarked segment:", evt.target.id)
+    const id = evt.target.id
+
+    this.setState({
+      isBookmarkSelected: true
+    })
+
     this._getSegmentFromStrava(id)
   }
 
   _getMarkerSegment(id) {
+    console.log("Get segment info for marker:", id)
+    this._isSegmentBookmarked(id)
+
     this._getSegmentFromStrava(id)
   }
 
@@ -261,8 +280,14 @@ class App extends Component {
     })
     .then(res => {
       console.log(res.data.data)
-
       const currentSegment = res.data.data
+
+      const bookmarkBtn = this.state.isBookmarkSelected
+        ? null
+        : (
+          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._addBookmark.bind(this)}>Bookmark Segment</button>
+        )
+
       const currentSegmentElement = (
         <ul>
           <li><h4><strong>Selected Segment</strong></h4></li>
@@ -271,7 +296,7 @@ class App extends Component {
           <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
           <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
           <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
-          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._addBookmark.bind(this)}>Bookmark Segment</button>
+          {bookmarkBtn}
           <hr />
         </ul>
       )
@@ -291,6 +316,20 @@ class App extends Component {
       })
     })
   }
+
+  _isSegmentBookmarked(id) {
+    var isBookmarked = false
+    for (var i = 0; i < this.state.bookmarks.length; i++) {
+      if (Number(this.state.bookmarks[i].stravaId) === Number(id)) {
+        isBookmarked = true
+        break
+      }
+    }
+
+    this.setState({
+      isBookmarkSelected: isBookmarked
+    })
+  }
 //////////////////////////////////////////////////////////////
   render() {
     const isLoggedIn = this.state.loggedIn
@@ -306,7 +345,7 @@ class App extends Component {
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
         <li key={i} id={segment.stravaId}>
-          <span onClick={this._getSegment.bind(this)} ><strong id={segment.stravaId}>{segment.name}</strong></span>
+          <span onClick={this._getBookmarkedSegment.bind(this)} ><strong id={segment.stravaId}>{segment.name}</strong></span>
           <p style={{margin: 0}}><i>{segment.city}, {segment.state}</i></p>
           <p style={{margin: 0}}>Times Completed: {segment.timesCompleted}</p>
           <div>

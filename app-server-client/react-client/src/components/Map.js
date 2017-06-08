@@ -47,50 +47,6 @@ function decodePolyline(encoded){
     }
 
 class Map extends Component {
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     map: null,
-  //     segments: [],
-  //     bounds: null
-  //   }
-  // }
-
-  // _mapLoaded(map) {
-  //   console.log('_mapLoaded')
-  //   if (this.state.map != null)
-  //     return
-  //   this.setState({
-  //     map: map
-  //   })
-  // }
-  //
-  // _mapMoved() {
-  //   console.log('_mapMoved center:', JSON.stringify(this.state.map.getCenter()))
-  //
-  //   const bounds = this.state.map.getBounds()
-  //   const boundaryStr = `${bounds.f.b}, ${bounds.b.b}, ${bounds.f.f}, ${bounds.b.f}`
-  //
-  //   return axios({
-  //     url: '/api/strava/segments',
-  //     method: 'post',
-  //     data: {boundary: boundaryStr}
-  //   })
-  //   .then(res => {
-  //     console.log(res.data.data.segments)
-  //     this.setState({
-  //       segments: [
-  //         ...res.data.data.segments
-  //       ],
-  //       bounds: boundaryStr
-  //     })
-  //   })
-  // }
-  //
-  // _zoomChanged() {
-  //   console.log('_zoomChanged:', this.state.map.getZoom())
-  // }
-
   _handleClickMarker(id) {
     this.props.onMarkerClick(id)
   }
