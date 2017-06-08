@@ -137,6 +137,12 @@ class Map extends Component {
       ? decodePolyline(this.props.polyline)
       : []
 
+    const polylineOptions = {
+      strokeColor: '#ff0d00',
+      strokeOpacity: '0.7',
+      strokeWeight: '5'
+    }
+
     return (
       <GoogleMap
         ref={this.props.ref}
@@ -147,7 +153,9 @@ class Map extends Component {
         {markers}
         <Marker icon={startMarker} position={currentSegmentMarkerStart}/>
         <Marker icon={endMarker} position={currentSegmentMarkerEnd}/>
-        <Polyline path={decodedPolyline} />
+        <Polyline
+          options={polylineOptions}
+          path={decodedPolyline} />
       </GoogleMap>
     )
   }
