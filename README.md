@@ -2,28 +2,31 @@
 
 # **Let's Move**
 
-A web application created for users to view popular running and cycling segments at any location!
+A web application created for users to view popular running and cycling segments from any location in the world!
  
 ## Overview:
 
 **Let's Move** is a web application designed for users that are looking for popular running and cycling routes. My main goal with this project was to become more familiar with the React framework. I also wanted to gain more practice implementing multiple APIs for a web application, which is why I decided to include both the Google Maps and Strava APIs. 
 
-The concept for the app was based on the user interface and functionality from the Strava Application as well as the Airbnb 
+The application's design was based on the user interface and functionality from the Strava application as well as the Airbnb application. I wanted to create an application where anybody could go to get ideas for their next run or bike ride. I think this is extremely useful for people that are visiting a new location and are wanting to know where the popular running and cycling routes are located. In addition, I really wanted to experiment with the Google Maps API and become more familiar with it and learn how to integrate its key features into a web application. 
 
 Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for additional documentation. 
+
 ## Using The App:
+
 ### For Developers:
-- Fork the repo from <a href="https://github.com/dmacauyag/WDI-45-Project_4">GitHub</a> and clone to your local drive. 
-- `cd` into the root of your cloned copy and run `mongod` to start the MongoDB.
-- From the root, `cd app-server-client/express-jwt-api/` and run `npm install` to load the dependencies for the server app.
-- From the root, `cd app-server-client/react-client/` and run `npm install` to load the dependencies for the client app.
-- From the root of the client app (see previous step), run `npm start` to start the server.
+- For the API / server application, fork from the repo on <a href="https://github.com/dmacauyag/WDI-45-Project_4-Server_App">GitHub</a>
+	- Run `mongod` to start the MongoDB.
+	- Run `npm install` to load the dependencies for the server app.
+- For the client application, fork from the repo on <a href="https://github.com/dmacauyag/WDI-45-Project_4-Client_App">GitHub</a>
+	- Run `npm install` to load the dependencies for the client app.
+	- Run `npm start` to start the development server.
 
 ### For Regular Users:
 - Click on <a href="#">Let's Move</a> to visit the application.
 - Create a new account in order to access full functionality.
 - Under the "Activity Type" selector, choose what type of activity you want to see appear as you navigate the map.
-- Simply click on the map to navigate. As you zoom in/out and change the position of the map, new markers will appear corresponding to a segment. 
+- Simply click on the map and drag to navigate. As you zoom in/out and change the position of the map, new markers will appear corresponding to a segment. 
 - The segments that are currently shown on the map are also listed on the sidebar. 
 - To view additional information on a segment as well as a line to display the route on the map, simply click on a segment from the list in the sidebar or a marker on the map. 
 - If the selected segment is not already bookmarked, a button will appear with the option to bookmark the segment. 
@@ -41,6 +44,8 @@ Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for addi
 - Express Framework (back-end)
 - React Framework (front-end
 - Node.js
+
+In addition: 
 
 - The <a href="https://developers.google.com/maps/documentation/javascript/">Google Maps Javascript API</a> was utilized with the help of the <a href="https://www.npmjs.com/package/react-google-maps">react-google-maps</a> npm package.
 - The <a href="https://strava.github.io/api/">Strava V3 API</a> was utilized with the help of the <a href="https://www.npmjs.com/package/strava-v3">strava-v3</a> npm package. 
@@ -73,7 +78,7 @@ Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for addi
 - Add a feature for users to search for a location on the map.
 - Add additional filters for the segments that appear on the map. 
 
-## Credit and Acknowledgements
+## Credit and Acknowledgements:
 - The custom map marker icons were from <a href="https://mapicons.mapsmarker.com/">Map Icons Collection</a>.
 - The following <a href="https://www.youtube.com/watch?v=jZZEskrwc4w&list=PL9ygKXBeXkWyQI9g3CsNKLjRX-5WoRXgf&index=2&t=250s">video tutorial</a> from **velocity360**  was used to help setup the Google Map.
 - The polyline decoder function was taken from **GitHub**: <a href="https://gist.github.com/ismaels/6636986">https://gist.github.com/ismaels/6636986</a>
