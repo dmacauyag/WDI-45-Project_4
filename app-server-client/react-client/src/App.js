@@ -234,44 +234,16 @@ class App extends Component {
   _getSegment(evt) {
     evt.preventDefault()
     console.log("Get segment info from strava for:", evt.target.id)
+    const id = evt.target.id
 
-    return axios({
-      url:`/api/strava/segments/${evt.target.id}`,
-      method: 'get'
-    })
-    .then(res => {
-      console.log(res.data.data)
-
-      const currentSegment = res.data.data
-      const currentSegmentElement = (
-        <ul>
-          <li><h4><strong>Selected Segment</strong></h4></li>
-          <li><strong>Name:</strong> {currentSegment.name}</li>
-          <li><strong>Location:</strong> {currentSegment.city}, {currentSegment.state}</li>
-          <li><strong>Activity Type:</strong> {currentSegment.activity_type}</li>
-          <li><strong>Distance:</strong> {(currentSegment.distance / 1609.344).toFixed(2)} miles</li>
-          <li><strong>Average Grade:</strong> {currentSegment.average_grade}%</li>
-          <button id={currentSegment.id} name={currentSegment.name} style={{height: '30px', backgroundColor: 'green'}} onClick={this._addBookmark.bind(this)}>Bookmark Segment</button>
-          <hr />
-        </ul>
-      )
-
-      this.setState({
-        currentSegmentElement: currentSegmentElement,
-        currentSegment: currentSegment,
-        currentSegmentPolyline: currentSegment.map.polyline,
-        mapCenter: {
-          lat: currentSegment.start_latitude,
-          lng: currentSegment.start_longitude
-        },
-        segments: [
-          currentSegment
-        ]
-      })
-    })
+    this._getSegmentFromStrava(id)
   }
 
   _getMarkerSegment(id) {
+    this._getSegmentFromStrava(id)
+  }
+
+  _getSegmentFromStrava(id) {
     return axios({
       url:`/api/strava/segments/${id}`,
       method: 'get'
