@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { withGoogleMap, GoogleMap, Marker, Polyline } from 'react-google-maps'
 import axios from 'axios'
+import cyclingMarker from '../assets/images/cyclingMarker.png'
+import runningMarker from '../assets/images/runningMarker.png'
 
 axios.defaults.baseURL = 'http://localhost:3001'
 
@@ -92,6 +94,11 @@ class Map extends Component {
   }
 
   render() {
+    console.log('activity type', this.props.activityType)
+    const markerIcon = (this.props.activityType === 'riding')
+      ? cyclingMarker
+      : runningMarker
+
     const markers = this.props.segments.map((segment, i) => {
       const marker = {
         position: {
@@ -102,6 +109,7 @@ class Map extends Component {
       }
       return <Marker
               key={i}
+              icon={markerIcon}
               onClick={this._handleClickMarker.bind(this, segment.id)}
               {...marker} />
     })

@@ -17,7 +17,8 @@ class App extends Component {
     this.state = {
       mql: mql,
       segments: [],
-      segmentType: 'riding',
+      segmentSelected: 'riding',
+      activityType: 'riding',
       bookmarks: [],
       updatedBookmark: null,
       currentSegmentElement: null,
@@ -103,7 +104,7 @@ class App extends Component {
 
   _handleSegmentSelect(evt) {
     this.setState({
-      segmentType: evt.target.value
+      segmentSelected: evt.target.value
     })
   }
 //////////////////////////////////////////////////////////////
@@ -141,7 +142,7 @@ class App extends Component {
       method: 'post',
       data: {
         boundary: bounds,
-        activityType: this.state.segmentType
+        activityType: this.state.segmentSelected
       }
     })
     .then(res => {
@@ -150,7 +151,9 @@ class App extends Component {
         segments: [
           ...res.data.data.segments
         ],
-        bounds: bounds
+        bounds: bounds,
+        segmentSelected: this.state.segmentSelected,
+        activityType: this.state.segmentSelected
       })
     })
   }
@@ -384,6 +387,7 @@ class App extends Component {
                         zoom={14}
                         center={this.state.mapCenter}
                         segments={this.state.segments}
+                        activityType={this.state.activityType}
                         polyline={this.state.currentSegmentPolyline}
                         currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}
