@@ -23,7 +23,7 @@ Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for addi
 	- Run `npm start` to start the development server.
 
 ### For Regular Users:
-- Click on <a href="#">Let's Move</a> to visit the application.
+- Click on <a href="https://wdi45-letsmove.herokuapp.com/">Let's Move</a> to visit the application.
 - Create a new account in order to access full functionality.
 - Under the "Activity Type" selector, choose what type of activity you want to see appear as you navigate the map.
 - Simply click on the map and drag to navigate. As you zoom in/out and change the position of the map, new markers will appear corresponding to a segment. 
