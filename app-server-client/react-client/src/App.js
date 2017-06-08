@@ -289,6 +289,14 @@ class App extends Component {
   render() {
     const isLoggedIn = this.state.loggedIn
 
+    const bannerHeader = isLoggedIn
+      ? `Welcome ${this.state.currentUser.name}!`
+      : "Welcome to Let's Move!"
+
+    const bannerText = isLoggedIn
+      ? "Select the type of activity you're looking for and navigate the map below to find corresponding segments."
+      : "Click on Sign Up or Log In on the left to begin"
+
     const bookmarkElements = this.state.bookmarks.map((segment, i) => {
       return (
         <li key={i} id={segment.stravaId}>
@@ -332,14 +340,14 @@ class App extends Component {
           <Button
             label='Sign Up'
             name='signup'
-            className='btn-link'
+            className='btn btn-primary customBtn'
             onClick={this._setView.bind(this)}
           />
           <span className='	glyphicon glyphicon-option-vertical'></span>
           <Button
             label='Log In'
             name='login'
-            className='btn-link'
+            className='btn btn-primary customBtn'
             onClick={this._setView.bind(this)}
           />
         </div>
@@ -363,13 +371,13 @@ class App extends Component {
                           <div className="row">
                             <div className="col-sm-6 col-md-5 col-md-offset-1">
                               <div>
-                                <h1>Welcome to the Home Page!</h1>
+                                <h1>{bannerHeader}</h1>
                                 <p className="lead">
-                                  Navigate the map below to find running and/or cycling segments.
+                                  {bannerText}
                                 </p>
                                 <hr className="short" />
                                 <div className="form-group">
-                                  <label>Segment Type:</label>
+                                  <label>Activity Type:</label>
                                   <select className="form-control" onChange={this._handleSegmentSelect.bind(this)}>
                                     <option value="riding">Cycling</option>
                                     <option value="running">Running</option>
