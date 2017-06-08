@@ -18,6 +18,7 @@ class App extends Component {
       mql: mql,
       segments: [],
       segmentSelected: 'riding',
+      isSegmentSelected: false,
       activityType: 'riding',
       bookmarks: [],
       updatedBookmark: null,
@@ -153,7 +154,8 @@ class App extends Component {
         ],
         bounds: bounds,
         segmentSelected: this.state.segmentSelected,
-        activityType: this.state.segmentSelected
+        activityType: this.state.segmentSelected,
+        isSegmentSelected: false
       })
     })
   }
@@ -272,6 +274,7 @@ class App extends Component {
         currentSegmentElement: currentSegmentElement,
         currentSegment: currentSegment,
         currentSegmentPolyline: currentSegment.map.polyline,
+        isSegmentSelected: true,
         mapCenter: {
           lat: currentSegment.start_latitude,
           lng: currentSegment.start_longitude
@@ -389,6 +392,7 @@ class App extends Component {
                         segments={this.state.segments}
                         activityType={this.state.activityType}
                         polyline={this.state.currentSegmentPolyline}
+                        isSegmentSelected={this.state.isSegmentSelected}
                         currentSegment={this.state.currentSegment}
                         ref={this._mapLoaded.bind(this)}
                         onMarkerClick={this._markerClicked.bind(this)}

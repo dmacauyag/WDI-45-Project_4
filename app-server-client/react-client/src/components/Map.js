@@ -3,6 +3,8 @@ import { withGoogleMap, GoogleMap, Marker, Polyline } from 'react-google-maps'
 import axios from 'axios'
 import cyclingMarker from '../assets/images/cyclingMarker.png'
 import runningMarker from '../assets/images/runningMarker.png'
+import startMarker from '../assets/images/startMarker.png'
+import endMarker from '../assets/images/endMarker.png'
 
 axios.defaults.baseURL = 'http://localhost:3001'
 
@@ -94,10 +96,13 @@ class Map extends Component {
   }
 
   render() {
-    console.log('activity type', this.props.activityType)
-    const markerIcon = (this.props.activityType === 'riding')
+    var markerIcon = (this.props.activityType === 'riding')
       ? cyclingMarker
       : runningMarker
+
+    var markerIcon = (this.props.isSegmentSelected)
+      ? startMarker
+      : markerIcon
 
     const markers = this.props.segments.map((segment, i) => {
       const marker = {
@@ -140,8 +145,8 @@ class Map extends Component {
         defaultZoom={this.props.zoom}
         center={this.props.center} >
         {markers}
-        <Marker position={currentSegmentMarkerStart}/>
-        <Marker position={currentSegmentMarkerEnd}/>
+        <Marker icon={startMarker} position={currentSegmentMarkerStart}/>
+        <Marker icon={endMarker} position={currentSegmentMarkerEnd}/>
         <Polyline path={decodedPolyline} />
       </GoogleMap>
     )
