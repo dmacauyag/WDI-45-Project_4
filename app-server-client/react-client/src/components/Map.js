@@ -106,6 +106,20 @@ class Map extends Component {
               {...marker} />
     })
 
+    const currentSegmentMarkerStart = this.props.currentSegment
+      ? {
+        lat: this.props.currentSegment.start_latitude,
+        lng: this.props.currentSegment.start_longitude
+      }
+      : null
+
+    const currentSegmentMarkerEnd = this.props.currentSegment
+      ? {
+        lat: this.props.currentSegment.end_latitude,
+        lng: this.props.currentSegment.end_longitude
+      }
+      : null
+
     const decodedPolyline = this.props.polyline
       ? decodePolyline(this.props.polyline)
       : []
@@ -118,6 +132,8 @@ class Map extends Component {
         defaultZoom={this.props.zoom}
         center={this.props.center} >
         {markers}
+        <Marker position={currentSegmentMarkerStart}/>
+        <Marker position={currentSegmentMarkerEnd}/>
         <Polyline path={decodedPolyline} />
       </GoogleMap>
     )
