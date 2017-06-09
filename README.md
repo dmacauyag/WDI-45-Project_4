@@ -57,10 +57,10 @@ In addition:
 - As a user, when I select a running or cycling segment, I want to visually see the route on the map as well as markers to highlight for where the segment begins and ends.
 
 ## Wireframe:
-![Screenshot](public/images/wireframe.png)
+![Screenshot](public/images/Wireframe.png)
 
 ## ERD Diagram:
-![Screenshot](public/images/erd-diagram.png)
+![Screenshot](public/images/ERD-diagram.png)
 
 ## MVP:
 - Implement two models: users and segments.
