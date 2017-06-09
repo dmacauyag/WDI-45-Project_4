@@ -8,9 +8,11 @@ A web application created for users to view popular running and cycling segments
 
 **Let's Move** is a web application designed for users that are looking for popular running and cycling routes. My main goal with this project was to become more familiar with the React framework. I also wanted to gain more practice implementing multiple APIs for a web application, which is why I decided to include both the Google Maps and Strava APIs. 
 
-The application's design was based on the user interface and functionality from the Strava application as well as the Airbnb application. I wanted to create an application where anybody could go to get ideas for their next run or bike ride. I think this is extremely useful for people that are visiting a new location and are wanting to know where the popular running and cycling routes are located. In addition, I really wanted to experiment with the Google Maps API and become more familiar with it and learn how to integrate its key features into a web application. 
+The application's design was based on the user interface and functionality from both the Strava and Airbnb applications. I wanted to create an application where anybody could go to get ideas for their next run or bike ride. I think this is extremely useful for people that are visiting a new location and are wanting to know where the popular running and cycling routes are located. In addition, I really wanted to experiment with the Google Maps API and become more familiar with it and learn how to integrate its key features into a web application. 
 
-Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for additional documentation. 
+The application's key functionality is to allow users to pan across a map generated from the Google Maps API. As the user explores the map, markers will appear that correspond to either running or cycling routes (depending on what the user sets the filter) that are located within the map's boundaries. These routes (segments) are being retrieved from the Strava API and generated onto the map with a marker at the starting position. Clicking on a segment will retrieve additional data on that segment, as well as produce a polyline on the map to visually display the route along with its starting and ending points. 
+
+(Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for additional documentation.) 
 
 ## Using The App:
 
@@ -42,7 +44,7 @@ Link to <a href="https://trello.com/b/PNYmw6me/to-dos">Trello Board</a> for addi
 - Bootstrap CSS framework
 - MongoDB
 - Express Framework (back-end)
-- React Framework (front-end
+- React Framework (front-end)
 - Node.js
 
 In addition: 
