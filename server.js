@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({extended: false})) // interpret form data
 
 // server root route:
 app.get('/', (req, res) => {
-  res.json({message: "Server root. All API routes start with /api..."})
+  res.json({message: "Server root. All API routes start with /api... Visit 'https://wdi45-letsmove.herokuapp.com/' to view the deployed application."})
 })
 
 // apply all routes for Strava API calls here
@@ -41,7 +41,7 @@ app.use('/api/users', usersRoutes)
 app.use('/api/segments', segmentsRoutes)
 
 
-// listen for incoming http requests: 
+// listen for incoming http requests:
 app.listen(port, (err) => {
   console.log(err || `Server running on ${port}`)
 })
