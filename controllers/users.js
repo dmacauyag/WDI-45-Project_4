@@ -40,6 +40,7 @@ function update(req, res) {
     if(err) return console.log(err)
     Object.assign(user, req.body)
     user.save((err) => {
+      if(err) return console.log(err)
       res.json({success: true, message: "User information updated.", user: user})
     })
   })
