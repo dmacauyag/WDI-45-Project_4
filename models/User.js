@@ -5,7 +5,8 @@ const
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     username: {type: String, required: true, unique: true},
-    password: {type: String, select: false}
+    password: {type: String, select: false},
+    location: {type: String}
   })
 
 // this function will take a string and encrypt it with bcrypt:
