@@ -41,7 +41,10 @@ function update(req, res) {
     Object.assign(user, req.body)
     user.save((err) => {
       if(err) return console.log(err)
-      res.json({success: true, message: "User information updated.", user: user})
+      const userData = user.toObject()
+      delete userData.password
+      const token = serverAuth.createToken(userData)
+      res.json({success: true, message: "User information updated.", user, token})
     })
   })
 }
